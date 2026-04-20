@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bakeoff 3</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- screen 1: pick genre filters + time window -->
+        <div id="screen1">
+            <h2>Find a Movie</h2>
+
+            <div class="filter-row">
+                <label class="row-label">Include genre</label>
+                <select id="s1Include"></select>
+                <label class="check-label">
+                    <input type="checkbox" id="s1Any"> Any genre
+                </label>
+            </div>
+
+            <div class="filter-row">
+                <label class="row-label">Exclude genre</label>
+                <select id="s1Exclude"></select>
+            </div>
+
+            <div class="filter-row slider-row">
+                <label class="row-label">Showtime window</label>
+                <div class="slider-area">
+                    <div class="range-wrapper">
+                        <span id="s1StartLabel" class="time-label">—</span>
+                        <span id="s1EndLabel" class="time-label">—</span>
+                        <div class="range-track">
+                            <div class="range-fill" id="s1Fill"></div>
+                        </div>
+                        <input type="range" id="s1Start" step="15">
+                        <input type="range" id="s1End" step="15">
+                    </div>
+                </div>
+                <label class="check-label">
+                    <input type="checkbox" id="s1ClearEnd"> No end time
+                </label>
+            </div>
+
+            <div class="screen-footer">
+                <button id="nextBtn" class="btn-primary">Next →</button>
+            </div>
+        </div>
+
+        <!-- screen 2: filtered movie list, filters editable at top -->
+        <div id="screen2" style="display:none">
+            <div class="s2-header">
+                <h2>Recommended Movies</h2>
+                <div class="filter-bar">
+                    <span class="filter-label">Filters</span>
+                    <div class="filter-item">
+                        <span class="filter-prefix">Include</span>
+                        <select id="s2Include"></select>
+                    </div>
+                    <div class="filter-item">
+                        <span class="filter-prefix">Exclude</span>
+                        <select id="s2Exclude"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="s2-slider-row">
+                <label class="row-label">Showtime window</label>
+                <div class="slider-area">
+                    <div class="range-wrapper">
+                        <span id="s2StartLabel" class="time-label">—</span>
+                        <span id="s2EndLabel" class="time-label">—</span>
+                        <div class="range-track">
+                            <div class="range-fill" id="s2Fill"></div>
+                        </div>
+                        <input type="range" id="s2Start" step="15">
+                        <input type="range" id="s2End" step="15">
+                    </div>
+                </div>
+                <label class="check-label">
+                    <input type="checkbox" id="s2ClearEnd"> No end time
+                </label>
+            </div>
+            <div id="movieList"></div>
+        </div>
+
+        <!-- screen 3: confirm showtime + enter name + tickets -->
+        <div id="screen3" style="display:none">
+            <div id="s3Info"></div>
+
+            <div class="s3-section">
+                <h3>Select Showtime:</h3>
+                <div id="s3Times" class="showtime-row"></div>
+            </div>
+
+            <div class="s3-section">
+                <div class="s3-form">
+                    <label>Enter Name: <input type="text" id="s3Name" placeholder="your name"></label>
+                    <label>Tickets: <input type="number" id="s3Tickets" min="1" max="20" value="2"></label>
+                </div>
+            </div>
+
+            <div class="s3-actions">
+                <button id="backBtn" class="btn-secondary">← Back</button>
+                <button id="submitBtn" class="btn-primary">Submit</button>
+            </div>
+        </div>
+
+    </div>
+    <!-- The following line, "./js/framework.js", *will* be changed before the real Bakeoff. -->
+    <script src="./js/framework.js"></script>
+    <!-- Your js code should be loaded from local file: -->
+    <script src="./js/main.js"></script>
+</body>
+</html>

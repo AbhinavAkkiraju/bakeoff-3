@@ -1,0 +1,471 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    background: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+#app {
+    background: white;
+    border-radius: 10px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 860px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+}
+
+h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: black;
+    margin-bottom: 28px;
+}
+
+h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 12px;
+}
+
+/* --- screen 1 filter rows --- */
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.row-label {
+    min-width: 150px;
+    font-size: 0.95rem;
+    color: black;
+}
+
+.filter-row select {
+    padding: 8px 12px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-family: "Times New Roman", Times, serif;
+    background: white;
+    width: 200px;
+    cursor: pointer;
+}
+
+.filter-row select:disabled {
+    background: #e8e8e8;
+    color: #888;
+    cursor: default;
+}
+
+.check-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.875rem;
+    color: black;
+    cursor: pointer;
+    user-select: none;
+}
+
+.check-label input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+/* --- dual range slider --- */
+.slider-row {
+    align-items: flex-start;
+    padding-top: 10px;
+}
+
+.slider-area {
+    flex: 1;
+}
+
+.range-wrapper {
+    position: relative;
+    height: 40px;
+    margin-top: 30px; /* space for the time label bubbles above */
+}
+
+/* the gray background track */
+.range-track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 5px;
+    background: #ccc;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* the dark fill between the two thumbs */
+.range-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: black;
+    border-radius: 3px;
+    left: 0;
+    width: 100%;
+}
+
+/* both range inputs sit on top of each other */
+.range-wrapper input[type="range"] {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    pointer-events: none; /* only the thumb gets clicks */
+    z-index: 2;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+}
+
+.range-wrapper input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: black;
+    border: 2px solid white;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    pointer-events: all;
+    cursor: grab;
+}
+
+.range-wrapper input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: black;
+    border: 2px solid white;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    pointer-events: all;
+    cursor: grab;
+}
+
+/* time bubble labels that float above the thumbs */
+.time-label {
+    position: absolute;
+    top: -28px;
+    transform: translateX(-50%);
+    background: black;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: "Times New Roman", Times, serif;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* little downward arrow on the bubble */
+.time-label::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: black;
+}
+
+/* --- nav buttons --- */
+.btn-primary {
+    background: white;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 28px;
+    border-radius: 5px;
+    font-size: 0.925rem;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-primary:hover { background: #e8e8e8; }
+
+.btn-secondary {
+    background: white;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 28px;
+    border-radius: 5px;
+    font-size: 0.925rem;
+    font-family: "Times New Roman", Times, serif;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-secondary:hover { background: #e8e8e8; }
+
+.screen-footer {
+    text-align: center;
+    margin-top: 8px;
+}
+
+/* --- screen 2 header + filter bar --- */
+.s2-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.s2-header h2 { margin-bottom: 0; }
+
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* each "Include/Exclude" box in the filter bar */
+.filter-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+    background: white;
+}
+
+.filter-prefix {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    font-family: "Times New Roman", Times, serif;
+    color: black;
+    background: #e8e8e8;
+    border-right: 1px solid black;
+    white-space: nowrap;
+}
+
+.filter-item select {
+    border: none;
+    padding: 5px 8px;
+    font-size: 0.82rem;
+    font-family: "Times New Roman", Times, serif;
+    background: white;
+    cursor: pointer;
+    outline: none;
+    color: black;
+}
+
+/* slider row on screen 2, sits below the filter bar */
+.s2-slider-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+}
+
+/* --- movie cards (screen 2) --- */
+.movie-card {
+    display: flex;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid #ccc;
+    transition: background 0.1s;
+}
+
+.movie-card:last-child { border-bottom: none; }
+
+.card-left {
+    flex: 0 0 180px;
+}
+
+.card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: black;
+    margin-bottom: 8px;
+}
+
+/* genre pill tags — shared by card + screen 3 */
+.genre-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 6px;
+}
+
+.genre-tag {
+    background: white;
+    color: black;
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    border: 1px solid black;
+}
+
+.card-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-desc {
+    font-size: 0.875rem;
+    color: black;
+    line-height: 1.55;
+}
+
+.select-btn {
+    align-self: flex-end;
+    margin-top: 10px;
+    background: white;
+    border: 1px solid black;
+    color: black;
+    padding: 6px 20px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s;
+}
+
+.select-btn:hover { background: #e8e8e8; }
+
+.no-results {
+    color: #666;
+    text-align: center;
+    padding: 40px 0;
+    font-size: 0.95rem;
+}
+
+/* --- screen 3 --- */
+#s3Info {
+    display: flex;
+    gap: 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 24px;
+}
+
+.s3-info-left {
+    flex: 0 0 220px;
+}
+
+.s3-info-left h2 {
+    margin-bottom: 6px;
+    font-size: 1.25rem;
+}
+
+.s3-info-right {
+    flex: 1;
+}
+
+.s3-info-right p {
+    font-size: 0.9rem;
+    color: black;
+    line-height: 1.6;
+}
+
+.s3-section {
+    margin-bottom: 22px;
+}
+
+/* row of clickable showtime boxes */
+.showtime-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.showtime-btn {
+    padding: 8px 22px;
+    border: 1px solid black;
+    border-radius: 4px;
+    background: white;
+    font-size: 0.9rem;
+    font-family: "Times New Roman", Times, serif;
+    cursor: pointer;
+    color: black;
+    transition: background 0.12s;
+}
+
+.showtime-btn:hover { background: #e8e8e8; }
+
+.showtime-btn.selected {
+    background: black;
+    border-color: black;
+    color: white;
+    font-weight: 600;
+}
+
+.s3-form {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.s3-form label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: black;
+}
+
+.s3-form input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: "Times New Roman", Times, serif;
+    width: 220px;
+}
+
+.s3-form input[type="number"] {
+    padding: 8px 10px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: "Times New Roman", Times, serif;
+    width: 72px;
+}
+
+.s3-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+}
