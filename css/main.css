@@ -6,7 +6,7 @@
 
 body {
     font-family: "Times New Roman", Times, serif;
-    background: #f0f0f0;
+    background: white;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -15,12 +15,9 @@ body {
 }
 
 #app {
-    background: white;
-    border-radius: 10px;
     padding: 40px 48px;
     width: 100%;
     max-width: 860px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.09);
 }
 
 h2 {
