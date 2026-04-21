@@ -37,7 +37,7 @@ h3 {
 /* --- screen 1 filter rows --- */
 .filter-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     margin-bottom: 32px;
 }
@@ -46,100 +46,65 @@ h3 {
     min-width: 150px;
     font-size: 0.95rem;
     color: black;
+    padding-top: 10px;
 }
 
-.filter-row select {
-    padding: 8px 12px;
+.genre-group {
+    width: 240px;
+    min-height: 132px;
     border: 1px solid black;
     border-radius: 5px;
-    font-size: 0.9rem;
-    font-family: "Times New Roman", Times, serif;
     background: white;
-    width: 200px;
-    cursor: pointer;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: black;
 }
 
-.filter-row select:disabled {
-    background: #e8e8e8;
-    color: #888;
-    cursor: default;
-}
-
-.check-label {
+.genre-option {
     display: flex;
     align-items: center;
-    gap: 7px;
-    font-size: 0.875rem;
-    color: black;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-family: "Times New Roman", Times, serif;
     cursor: pointer;
     user-select: none;
 }
 
-.check-label input[type="checkbox"] {
+.genre-option input[type="checkbox"] {
     width: 15px;
     height: 15px;
+    accent-color: black;
     cursor: pointer;
 }
 
-/* --- dual range slider --- */
 .slider-row {
-    align-items: flex-start;
-    padding-top: 10px;
+    align-items: center;
 }
 
-.slider-area {
+.slider-row .row-label {
+    padding-top: 0;
+}
+
+.slider-control {
+    display: flex;
+    align-items: center;
+    gap: 16px;
     flex: 1;
 }
 
-.range-wrapper {
-    position: relative;
-    height: 40px;
-    margin-top: 30px; /* space for the time label bubbles above */
-}
-
-/* the gray background track */
-.range-track {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 5px;
-    background: #ccc;
-    border-radius: 3px;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* the dark fill between the two thumbs */
-.range-fill {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    background: black;
-    border-radius: 3px;
-    left: 0;
-    width: 100%;
-}
-
-/* both range inputs sit on top of each other */
-.range-wrapper input[type="range"] {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
+.slider-control input[type="range"] {
+    flex: 1;
     -webkit-appearance: none;
     appearance: none;
-    background: transparent;
-    pointer-events: none; /* only the thumb gets clicks */
-    z-index: 2;
-    height: 40px;
-    margin: 0;
-    padding: 0;
+    height: 5px;
+    border-radius: 999px;
+    background: #ccc;
+    outline: none;
 }
 
-.range-wrapper input[type="range"]::-webkit-slider-thumb {
+.slider-control input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
@@ -147,46 +112,24 @@ h3 {
     background: black;
     border: 2px solid white;
     box-shadow: 0 1px 5px rgba(0,0,0,0.3);
-    pointer-events: all;
     cursor: grab;
 }
 
-.range-wrapper input[type="range"]::-moz-range-thumb {
+.slider-control input[type="range"]::-moz-range-thumb {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background: black;
     border: 2px solid white;
     box-shadow: 0 1px 5px rgba(0,0,0,0.3);
-    pointer-events: all;
     cursor: grab;
 }
 
-/* time bubble labels that float above the thumbs */
-.time-label {
-    position: absolute;
-    top: -28px;
-    transform: translateX(-50%);
-    background: black;
-    color: white;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-family: "Times New Roman", Times, serif;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 3;
-}
-
-/* little downward arrow on the bubble */
-.time-label::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 4px solid transparent;
-    border-top-color: black;
+.slider-value {
+    min-width: 78px;
+    font-size: 0.85rem;
+    color: black;
+    text-align: right;
 }
 
 /* --- nav buttons --- */
@@ -226,69 +169,17 @@ h3 {
 
 /* --- screen 2 header + filter bar --- */
 .s2-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 12px;
 }
 
 .s2-header h2 { margin-bottom: 0; }
 
-.filter-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+.filter-panel {
+    margin-bottom: 12px;
 }
 
-.filter-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: black;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-
-/* each "Include/Exclude" box in the filter bar */
-.filter-item {
-    display: flex;
-    align-items: center;
-    border: 1px solid black;
-    border-radius: 5px;
-    overflow: hidden;
-    background: white;
-}
-
-.filter-prefix {
-    padding: 5px 8px;
-    font-size: 0.8rem;
-    font-family: "Times New Roman", Times, serif;
-    color: black;
-    background: #e8e8e8;
-    border-right: 1px solid black;
-    white-space: nowrap;
-}
-
-.filter-item select {
-    border: none;
-    padding: 5px 8px;
-    font-size: 0.82rem;
-    font-family: "Times New Roman", Times, serif;
-    background: white;
-    cursor: pointer;
-    outline: none;
-    color: black;
-}
-
-/* slider row on screen 2, sits below the filter bar */
-.s2-slider-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 20px;
-    padding-top: 10px;
+.filter-panel .filter-row:last-child {
+    margin-bottom: 0;
 }
 
 /* --- movie cards (screen 2) --- */
@@ -465,4 +356,65 @@ h3 {
     justify-content: flex-end;
     gap: 12px;
     margin-top: 28px;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 16px;
+    }
+
+    #app {
+        padding: 28px 20px;
+    }
+
+    .filter-row,
+    #s3Info,
+    .s3-form,
+    .movie-card {
+        flex-direction: column;
+    }
+
+    .filter-row,
+    .slider-row,
+    .s3-form {
+        gap: 12px;
+    }
+
+    .row-label {
+        min-width: 0;
+        padding-top: 0;
+    }
+
+    .genre-group {
+        width: 100%;
+    }
+
+    .slider-control {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .slider-value {
+        min-width: 0;
+        text-align: left;
+    }
+
+    .card-left {
+        flex: 0 0 auto;
+    }
+
+    .select-btn {
+        align-self: flex-start;
+    }
+
+    .s3-info-left {
+        flex: 0 0 auto;
+    }
+
+    .s3-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
 }

@@ -13,34 +13,29 @@
             <h2>Find a Movie</h2>
 
             <div class="filter-row">
-                <label class="row-label">Include genre</label>
-                <select id="s1Include"></select>
-                <label class="check-label">
-                    <input type="checkbox" id="s1Any"> Any genre
-                </label>
+                <div class="row-label">Include genres</div>
+                <div id="s1Include" class="genre-group"></div>
             </div>
 
             <div class="filter-row">
-                <label class="row-label">Exclude genre</label>
-                <select id="s1Exclude"></select>
+                <div class="row-label">Exclude genres</div>
+                <div id="s1Exclude" class="genre-group"></div>
             </div>
 
             <div class="filter-row slider-row">
-                <label class="row-label">Showtime window</label>
-                <div class="slider-area">
-                    <div class="range-wrapper">
-                        <span id="s1StartLabel" class="time-label">—</span>
-                        <span id="s1EndLabel" class="time-label">—</span>
-                        <div class="range-track">
-                            <div class="range-fill" id="s1Fill"></div>
-                        </div>
-                        <input type="range" id="s1Start" step="15">
-                        <input type="range" id="s1End" step="15">
-                    </div>
+                <label class="row-label" for="s1Start">Start time</label>
+                <div class="slider-control">
+                    <input type="range" id="s1Start" step="15">
+                    <span id="s1StartLabel" class="slider-value">—</span>
                 </div>
-                <label class="check-label">
-                    <input type="checkbox" id="s1ClearEnd"> No end time
-                </label>
+            </div>
+
+            <div class="filter-row slider-row">
+                <label class="row-label" for="s1End">End time</label>
+                <div class="slider-control">
+                    <input type="range" id="s1End" step="15">
+                    <span id="s1EndLabel" class="slider-value">—</span>
+                </div>
             </div>
 
             <div class="screen-footer">
@@ -52,35 +47,36 @@
         <div id="screen2" style="display:none">
             <div class="s2-header">
                 <h2>Recommended Movies</h2>
-                <div class="filter-bar">
-                    <span class="filter-label">Filters</span>
-                    <div class="filter-item">
-                        <span class="filter-prefix">Include</span>
-                        <select id="s2Include"></select>
-                    </div>
-                    <div class="filter-item">
-                        <span class="filter-prefix">Exclude</span>
-                        <select id="s2Exclude"></select>
-                    </div>
-                </div>
             </div>
-            <div class="s2-slider-row">
-                <label class="row-label">Showtime window</label>
-                <div class="slider-area">
-                    <div class="range-wrapper">
-                        <span id="s2StartLabel" class="time-label">—</span>
-                        <span id="s2EndLabel" class="time-label">—</span>
-                        <div class="range-track">
-                            <div class="range-fill" id="s2Fill"></div>
-                        </div>
+
+            <div class="filter-panel">
+                <div class="filter-row">
+                    <div class="row-label">Include genres</div>
+                    <div id="s2Include" class="genre-group"></div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="row-label">Exclude genres</div>
+                    <div id="s2Exclude" class="genre-group"></div>
+                </div>
+
+                <div class="filter-row slider-row">
+                    <label class="row-label" for="s2Start">Start time</label>
+                    <div class="slider-control">
                         <input type="range" id="s2Start" step="15">
-                        <input type="range" id="s2End" step="15">
+                        <span id="s2StartLabel" class="slider-value">—</span>
                     </div>
                 </div>
-                <label class="check-label">
-                    <input type="checkbox" id="s2ClearEnd"> No end time
-                </label>
+
+                <div class="filter-row slider-row">
+                    <label class="row-label" for="s2End">End time</label>
+                    <div class="slider-control">
+                        <input type="range" id="s2End" step="15">
+                        <span id="s2EndLabel" class="slider-value">—</span>
+                    </div>
+                </div>
             </div>
+
             <div id="movieList"></div>
         </div>
 
@@ -96,7 +92,7 @@
             <div class="s3-section">
                 <div class="s3-form">
                     <label>Enter Name: <input type="text" id="s3Name" placeholder="your name"></label>
-                    <label>Tickets: <input type="number" id="s3Tickets" min="1" max="20" value="2"></label>
+                    <label>Tickets: <input type="number" id="s3Tickets" min="1" max="20"></label>
                 </div>
             </div>
 
