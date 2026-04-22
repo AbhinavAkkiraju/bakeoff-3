@@ -49,33 +49,36 @@
                 <h2>Recommended Movies</h2>
             </div>
 
-            <div class="filter-panel">
-                <div class="filter-row">
-                    <div class="row-label">Include genres</div>
-                    <div id="s2Include" class="genre-group"></div>
-                </div>
+            <details class="filter-panel">
+                <summary class="filter-toggle">Filters</summary>
+                <div class="filter-panel-body">
+                    <div class="filter-row">
+                        <div class="row-label">Include genres</div>
+                        <div id="s2Include" class="genre-group"></div>
+                    </div>
 
-                <div class="filter-row">
-                    <div class="row-label">Exclude genres</div>
-                    <div id="s2Exclude" class="genre-group"></div>
-                </div>
+                    <div class="filter-row">
+                        <div class="row-label">Exclude genres</div>
+                        <div id="s2Exclude" class="genre-group"></div>
+                    </div>
 
-                <div class="filter-row slider-row">
-                    <label class="row-label" for="s2Start">Start time</label>
-                    <div class="slider-control">
-                        <input type="range" id="s2Start" step="15">
-                        <span id="s2StartLabel" class="slider-value">—</span>
+                    <div class="filter-row slider-row">
+                        <label class="row-label" for="s2Start">Start time</label>
+                        <div class="slider-control">
+                            <input type="range" id="s2Start" step="15">
+                            <span id="s2StartLabel" class="slider-value">—</span>
+                        </div>
+                    </div>
+
+                    <div class="filter-row slider-row">
+                        <label class="row-label" for="s2End">End time</label>
+                        <div class="slider-control">
+                            <input type="range" id="s2End" step="15">
+                            <span id="s2EndLabel" class="slider-value">—</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="filter-row slider-row">
-                    <label class="row-label" for="s2End">End time</label>
-                    <div class="slider-control">
-                        <input type="range" id="s2End" step="15">
-                        <span id="s2EndLabel" class="slider-value">—</span>
-                    </div>
-                </div>
-            </div>
+            </details>
 
             <div id="movieList"></div>
         </div>
