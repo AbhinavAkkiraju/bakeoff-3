@@ -1,6 +1,6 @@
 /// <reference path="framework.ts" />
 // As always, we add our parts within a "load" event to make sure the HTML stuff has loaded first.
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
     const trial = new Trial("teamName");
     // getMovies is a function defined by the framework script. It will return a list of movies (in no guaranteed order). Each movie will be an object shaped like this:
     // {
@@ -11,7 +11,7 @@ window.addEventListener("load", () => {
     //  	description: string,
     //  	actors: list of strings
     // 	}
-    const movies = trial.getMovies();
+    const movies = await trial.getMovies();
     // convert "HH:MM" string to minutes since midnight
     function timeStrToMin(t) {
         const [h, m] = t.split(":").map(Number);
