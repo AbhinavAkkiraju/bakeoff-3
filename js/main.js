@@ -106,7 +106,7 @@ window.addEventListener("load", async () => {
         if (!triggerText) return;
         const checked = getCheckedValues(group);
         if (checked.length === 0) {
-            triggerText.textContent = "Select genres...";
+            triggerText.textContent = "Filter genres...";
             triggerText.classList.add("placeholder");
         } else {
             triggerText.textContent = checked.map(capitalize).join(", ");
