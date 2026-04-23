@@ -239,6 +239,14 @@ h3 {
 
 .btn-primary:hover { background: #e8e8e8; }
 
+.btn-primary.submitted {
+    background: #4caf50;
+    color: white;
+    border-color: #4caf50;
+    cursor: default;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
 .btn-secondary {
     background: white;
     color: black;

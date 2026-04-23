@@ -417,6 +417,8 @@ window.addEventListener("load", async () => {
         };
         // ===> Your code *must*, somewhere/somehow, call this: <===
         trial.submitMovieChoice(userData);
+        submitBtn.textContent = "Submitted";
+        submitBtn.classList.add("submitted");
     });
     showScreen(1);
 });
