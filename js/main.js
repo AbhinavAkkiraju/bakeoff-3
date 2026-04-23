@@ -17,12 +17,29 @@ window.addEventListener("load", async () => {
         const [h, m] = t.split(":").map(Number);
         return h * 60 + m;
     }
+    // convert number of hours past midnight into readable 12 hour number
+    // accounts for hours greater than one full day, like 25 should be 1 am
+    // this is needed for some movies that start near before midnight and end after
+    function getReadableHour(h) {
+        if (h === 0) {
+            return 12;
+        } else if (h < 13) {
+            return h;
+        } else if (h < 24) {
+            return h - 12;
+        } else if (h === 24) {
+            return 12;
+        } else {
+            return h - 24;
+        }
+    }
+
     // convert minutes to readable 12-hour time like "4:30 PM"
     function minToTime12(min) {
         const h = Math.floor(min / 60);
         const m = min % 60;
-        const ampm = h < 12 ? "AM" : "PM";
-        const h12 = h === 0 ? 12 : (h > 12 ? h - 12 : h);
+        const ampm = h < 12 ? "AM" : (h > 23 ? "AM" : "PM");
+        const h12 = getReadableHour(h);
         const minutes = m < 10 ? "0" + m : m + "";
         return `${h12}:${minutes} ${ampm}`;
     }
