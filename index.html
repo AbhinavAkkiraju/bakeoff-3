@@ -8,18 +8,20 @@
 <body>
     <div id="app">
 
-        <!-- screen 1: pick genre filters + time window -->
+        <!-- screen 1 is whre you can pick genre filters and the time window -->
         <div id="screen1">
             <h2>Find a Movie</h2>
 
-            <div class="filter-row">
-                <div class="row-label">Include genres</div>
-                <div id="s1Include" class="genre-group"></div>
-            </div>
+            <div class="genre-filters-row">
+                <div class="filter-row">
+                    <div class="row-label">Include genres</div>
+                    <div id="s1Include" class="genre-group"></div>
+                </div>
 
-            <div class="filter-row">
-                <div class="row-label">Exclude genres</div>
-                <div id="s1Exclude" class="genre-group"></div>
+                <div class="filter-row">
+                    <div class="row-label">Exclude genres</div>
+                    <div id="s1Exclude" class="genre-group"></div>
+                </div>
             </div>
 
             <div class="filter-row slider-row">
@@ -43,21 +45,23 @@
             </div>
         </div>
 
-        <!-- screen 2: filtered movie list, filters editable at top -->
+        <!-- screen 2 is where you can see the filtered movie list and the filters are editable at top -->
         <div id="screen2" style="display:none">
             <div class="s2-header">
                 <h2>Recommended Movies</h2>
             </div>
 
             <div class="filter-panel">
-                <div class="filter-row">
-                    <div class="row-label">Include genres</div>
-                    <div id="s2Include" class="genre-group"></div>
-                </div>
+                <div class="genre-filters-row">
+                    <div class="filter-row">
+                        <div class="row-label">Include genres</div>
+                        <div id="s2Include" class="genre-group"></div>
+                    </div>
 
-                <div class="filter-row">
-                    <div class="row-label">Exclude genres</div>
-                    <div id="s2Exclude" class="genre-group"></div>
+                    <div class="filter-row">
+                        <div class="row-label">Exclude genres</div>
+                        <div id="s2Exclude" class="genre-group"></div>
+                    </div>
                 </div>
 
                 <div class="filter-row slider-row">
@@ -80,7 +84,7 @@
             <div id="movieList"></div>
         </div>
 
-        <!-- screen 3: confirm showtime + enter name + tickets -->
+        <!-- screen 3 is where you can confirm showtime + enter name + tickets -->
         <div id="screen3" style="display:none">
             <div id="s3Info"></div>
 

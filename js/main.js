@@ -1,6 +1,6 @@
 /// <reference path="framework.ts" />
 // As always, we add our parts within a "load" event to make sure the HTML stuff has loaded first.
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
     const trial = new Trial("teamName");
     // getMovies is a function defined by the framework script. It will return a list of movies (in no guaranteed order). Each movie will be an object shaped like this:
     // {
@@ -11,7 +11,7 @@ window.addEventListener("load", () => {
     //  	description: string,
     //  	actors: list of strings
     // 	}
-    const movies = trial.getMovies();
+    const movies = await trial.getMovies();
     // convert "HH:MM" string to minutes since midnight
     function timeStrToMin(t) {
         const [h, m] = t.split(":").map(Number);
@@ -80,9 +80,43 @@ window.addEventListener("load", () => {
     const nextBtn = document.getElementById("nextBtn");
     const backBtn = document.getElementById("backBtn");
     const submitBtn = document.getElementById("submitBtn");
-    // fill a checkbox group with the known genres
+    // close all open genre dropdowns
+    document.addEventListener("click", () => {
+        document.querySelectorAll(".genre-panel.open").forEach(p => p.classList.remove("open"));
+    });
+    function updateGenreTrigger(group) {
+        const triggerText = group.querySelector(".genre-trigger-text");
+        if (!triggerText) return;
+        const checked = getCheckedValues(group);
+        if (checked.length === 0) {
+            triggerText.textContent = "Select genres...";
+            triggerText.classList.add("placeholder");
+        } else {
+            triggerText.textContent = checked.map(capitalize).join(", ");
+            triggerText.classList.remove("placeholder");
+        }
+    }
+    // build dropdown genre selector
     function fillGenreGroup(group) {
         group.innerHTML = "";
+        const trigger = document.createElement("div");
+        trigger.className = "genre-trigger";
+        const triggerText = document.createElement("span");
+        triggerText.className = "genre-trigger-text placeholder";
+        triggerText.textContent = "Select genres...";
+        const arrow = document.createElement("span");
+        arrow.className = "genre-arrow";
+        arrow.textContent = "▾";
+        trigger.appendChild(triggerText);
+        trigger.appendChild(arrow);
+        const panel = document.createElement("div");
+        panel.className = "genre-panel";
+        const search = document.createElement("input");
+        search.type = "text";
+        search.className = "genre-search";
+        search.placeholder = "Search...";
+        const list = document.createElement("div");
+        list.className = "genre-list";
         for (let i = 0; i < allGenres.length; i++) {
             const genre = allGenres[i];
             const optionLabel = document.createElement("label");
@@ -94,12 +128,34 @@ window.addEventListener("load", () => {
             optionText.textContent = capitalize(genre);
             optionLabel.appendChild(checkbox);
             optionLabel.appendChild(optionText);
-            group.appendChild(optionLabel);
+            list.appendChild(optionLabel);
         }
+        panel.appendChild(search);
+        panel.appendChild(list);
+        group.appendChild(trigger);
+        group.appendChild(panel);
+        trigger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const isOpen = panel.classList.contains("open");
+            document.querySelectorAll(".genre-panel.open").forEach(p => p.classList.remove("open"));
+            if (!isOpen) {
+                panel.classList.add("open");
+                search.focus();
+            }
+        });
+        panel.addEventListener("click", (e) => e.stopPropagation());
+        search.addEventListener("input", () => {
+            const query = search.value.toLowerCase();
+            const options = list.querySelectorAll(".genre-option");
+            for (let i = 0; i < options.length; i++) {
+                const text = options[i].querySelector("span").textContent.toLowerCase();
+                options[i].style.display = text.includes(query) ? "" : "none";
+            }
+        });
     }
     function getCheckedValues(group) {
         const selectedValues = [];
-        const inputs = group.getElementsByTagName("input");
+        const inputs = group.querySelectorAll("input[type='checkbox']");
         for (let i = 0; i < inputs.length; i++) {
             if (inputs[i].checked) {
                 selectedValues.push(inputs[i].value);
@@ -109,10 +165,11 @@ window.addEventListener("load", () => {
     }
     function setCheckedValues(group, values) {
         const selected = new Set(values);
-        const inputs = group.getElementsByTagName("input");
+        const inputs = group.querySelectorAll("input[type='checkbox']");
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].checked = selected.has(inputs[i].value);
         }
+        updateGenreTrigger(group);
     }
     function syncFilterControls(controls) {
         setCheckedValues(controls.includeGroup, state.includeGenres);
@@ -169,11 +226,12 @@ window.addEventListener("load", () => {
     }
     // build genre-tag spans and append to a container
     function appendGenreTags(container, movie) {
+        const included = new Set(state.includeGenres);
         const wrap = document.createElement("div");
         wrap.className = "genre-tags";
         for (let i = 0; i < movie.genres.length; i++) {
             const span = document.createElement("span");
-            span.className = "genre-tag";
+            span.className = "genre-tag" + (included.has(movie.genres[i]) ? " genre-tag-match" : "");
             span.textContent = capitalize(movie.genres[i]);
             wrap.appendChild(span);
         }
@@ -182,6 +240,8 @@ window.addEventListener("load", () => {
     function updateGenresFromControls(controls) {
         state.includeGenres = getCheckedValues(controls.includeGroup);
         state.excludeGenres = getCheckedValues(controls.excludeGroup);
+        updateGenreTrigger(controls.includeGroup);
+        updateGenreTrigger(controls.excludeGroup);
         syncAllFilterControls();
         renderMovieList();
     }
