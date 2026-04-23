@@ -1,7 +1,7 @@
 /// <reference path="framework.ts" />
 // As always, we add our parts within a "load" event to make sure the HTML stuff has loaded first.
 window.addEventListener("load", async () => {
-    const trial = new Trial("teamName");
+    const trial = new Trial("DAHH");
     // getMovies is a function defined by the framework script. It will return a list of movies (in no guaranteed order). Each movie will be an object shaped like this:
     // {
     // 		title: string,
