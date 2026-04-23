@@ -97,10 +97,11 @@ window.addEventListener("load", async () => {
     const nextBtn = document.getElementById("nextBtn");
     const backBtn = document.getElementById("backBtn");
     const submitBtn = document.getElementById("submitBtn");
-    // close all open genre dropdowns
+    // clicking anywhere outside a dropdown should close it
     document.addEventListener("click", () => {
         document.querySelectorAll(".genre-panel.open").forEach(p => p.classList.remove("open"));
     });
+    // keeps the trigger button text in sync with whatever's checked and shows placeholder if nothing selected
     function updateGenreTrigger(group) {
         const triggerText = group.querySelector(".genre-trigger-text");
         if (!triggerText) return;
@@ -109,13 +110,15 @@ window.addEventListener("load", async () => {
             triggerText.textContent = "Filter genres...";
             triggerText.classList.add("placeholder");
         } else {
+            // just list out the selected genres comma separated
             triggerText.textContent = checked.map(capitalize).join(", ");
             triggerText.classList.remove("placeholder");
         }
     }
-    // build dropdown genre selector
+    // replaces the old flat checkbox list with a proper dropdown. we added this because we learned in oh that there can be up to 50 genres
     function fillGenreGroup(group) {
         group.innerHTML = "";
+        // the clickable button that shows what's selected and opens/closes the panel
         const trigger = document.createElement("div");
         trigger.className = "genre-trigger";
         const triggerText = document.createElement("span");
@@ -126,6 +129,7 @@ window.addEventListener("load", async () => {
         arrow.textContent = "▾";
         trigger.appendChild(triggerText);
         trigger.appendChild(arrow);
+        // the hidden panel that drops down with the search bar + checkbox list inside
         const panel = document.createElement("div");
         panel.className = "genre-panel";
         const search = document.createElement("input");
@@ -134,6 +138,7 @@ window.addEventListener("load", async () => {
         search.placeholder = "Search...";
         const list = document.createElement("div");
         list.className = "genre-list";
+        // dump all genres into the list as checkboxes
         for (let i = 0; i < allGenres.length; i++) {
             const genre = allGenres[i];
             const optionLabel = document.createElement("label");
@@ -151,6 +156,7 @@ window.addEventListener("load", async () => {
         panel.appendChild(list);
         group.appendChild(trigger);
         group.appendChild(panel);
+        // toggle the panel open/closed when the trigger is clicked, close any other open ones first
         trigger.addEventListener("click", (e) => {
             e.stopPropagation();
             const isOpen = panel.classList.contains("open");
@@ -160,7 +166,9 @@ window.addEventListener("load", async () => {
                 search.focus();
             }
         });
+        // stop clicks inside the panel from bubbling up and immediately closing it
         panel.addEventListener("click", (e) => e.stopPropagation());
+        // this filter hides genres that don't match as the user types
         search.addEventListener("input", () => {
             const query = search.value.toLowerCase();
             const options = list.querySelectorAll(".genre-option");
@@ -172,6 +180,7 @@ window.addEventListener("load", async () => {
     }
     function getCheckedValues(group) {
         const selectedValues = [];
+        // only grab checkboxes, not the search text input
         const inputs = group.querySelectorAll("input[type='checkbox']");
         for (let i = 0; i < inputs.length; i++) {
             if (inputs[i].checked) {
@@ -243,11 +252,13 @@ window.addEventListener("load", async () => {
     }
     // build genre-tag spans and append to a container
     function appendGenreTags(container, movie) {
+        // snapshot the included genres so we can highlight matching tags in green
         const included = new Set(state.includeGenres);
         const wrap = document.createElement("div");
         wrap.className = "genre-tags";
         for (let i = 0; i < movie.genres.length; i++) {
             const span = document.createElement("span");
+            // put genre-tag-match on it if the user specifically searched for this genre
             span.className = "genre-tag" + (included.has(movie.genres[i]) ? " genre-tag-match" : "");
             span.textContent = capitalize(movie.genres[i]);
             wrap.appendChild(span);
@@ -257,6 +268,7 @@ window.addEventListener("load", async () => {
     function updateGenresFromControls(controls) {
         state.includeGenres = getCheckedValues(controls.includeGroup);
         state.excludeGenres = getCheckedValues(controls.excludeGroup);
+        // both dropdowns need their labels refreshed since state just changed
         updateGenreTrigger(controls.includeGroup);
         updateGenreTrigger(controls.excludeGroup);
         syncAllFilterControls();
